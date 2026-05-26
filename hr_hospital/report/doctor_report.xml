@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="paperformat_doctor_report_a4" model="report.paperformat">
+        <field name="name">Doctor Report A4</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">35</field>
+        <field name="margin_bottom">25</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+    </record>
+
+    <record id="action_report_hospital_doctor" model="ir.actions.report">
+        <field name="name">Doctor Report</field>
+        <field name="model">hospital.doctor</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_hospital.report_hospital_doctor</field>
+        <field name="report_file">hr_hospital.report_hospital_doctor</field>
+        <field name="binding_model_id" ref="model_hospital_doctor"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_doctor_report_a4"/>
+    </record>
+
+    <template id="report_hospital_doctor">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <h2>
+                            <span t-field="doc.name"/>
+                            <t t-if="doc.specialty">
+                                — <span t-field="doc.specialty"/>
+                            </t>
+                        </h2>
+
+                        <h3>Visit History</h3>
+
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Planned Date</th>
+                                    <th>Actual Date</th>
+                                    <th>Patient</th>
+                                    <th>Disease</th>
+                                    <th>Summary</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.env['hospital.visit'].search([('doctor_id', '=', doc.id)], order='planned_datetime desc')" t-as="visit">
+                                    <td>
+                                        <span t-if="visit.state == 'planned'"
+                                              style="background-color:#fff3cd; padding:4px 8px; border-radius:4px;">
+                                            Заплановано
+                                        </span>
+                                        <span t-if="visit.state == 'done'"
+                                              style="background-color:#d4edda; padding:4px 8px; border-radius:4px;">
+                                            Завершено
+                                        </span>
+                                        <span t-if="visit.state == 'cancelled'"
+                                              style="background-color:#f8d7da; padding:4px 8px; border-radius:4px;">
+                                            Скасовано
+                                        </span>
+                                    </td>
+                                    <td><span t-field="visit.planned_datetime"/></td>
+                                    <td><span t-field="visit.actual_datetime"/></td>
+                                    <td><span t-field="visit.patient_id"/></td>
+                                    <td><span t-field="visit.disease_id"/></td>
+                                    <td><span t-field="visit.summary"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Patients</h3>
+
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Gender</th>
+                                    <th>Birth Date</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.env['hospital.patient'].search([('personal_doctor_id', '=', doc.id)])" t-as="patient">
+                                    <td><span t-field="patient.name"/></td>
+                                    <td><span t-field="patient.gender"/></td>
+                                    <td><span t-field="patient.birth_date"/></td>
+                                    <td><span t-field="patient.phone"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div style="margin-top: 30px; font-size: 12px;">
+                            <p>
+                                Printed:
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                            </p>
+                            <p>
+                                City:
+                                <span t-esc="res_company.city or ''"/>
+                            </p>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

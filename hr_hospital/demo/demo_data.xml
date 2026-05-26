@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- DOCTORS -->
+    <record id="doctor_house" model="hospital.doctor">
+        <field name="name">Dr. House</field>
+        <field name="specialty">Diagnostics</field>
+        <field name="phone">+380501111111</field>
+        <field name="category_id" ref="doctor_category_highest"/>
+        <field name="gender">male</field>
+        <field name="blood_group">o_pos</field>
+        <field name="birth_date">1970-06-11</field>
+    </record>
+
+    <record id="doctor_wilson" model="hospital.doctor">
+        <field name="name">Dr. Wilson</field>
+        <field name="specialty">Oncology</field>
+        <field name="phone">+380502222222</field>
+        <field name="category_id" ref="doctor_category_specialist"/>
+        <field name="gender">male</field>
+        <field name="blood_group">a_pos</field>
+        <field name="birth_date">1974-02-28</field>
+    </record>
+
+    <record id="doctor_cuddy" model="hospital.doctor">
+        <field name="name">Dr. Cuddy</field>
+        <field name="specialty">General Medicine</field>
+        <field name="phone">+380503333333</field>
+        <field name="category_id" ref="doctor_category_intern"/>
+        <field name="mentor_id" ref="doctor_house"/>
+        <field name="gender">female</field>
+        <field name="blood_group">b_pos</field>
+        <field name="birth_date">1985-08-21</field>
+    </record>
+
+
+    <!-- PATIENTS -->
+    <record id="patient_john" model="hospital.patient">
+        <field name="name">John Smith</field>
+        <field name="birth_date">1995-04-12</field>
+        <field name="phone">+380671111111</field>
+        <field name="personal_doctor_id" ref="doctor_house"/>
+        <field name="insurance_policy_number">INS-100001</field>
+        <field name="gender">male</field>
+        <field name="blood_group">o_pos</field>
+    </record>
+
+    <record id="patient_mary" model="hospital.patient">
+        <field name="name">Mary Johnson</field>
+        <field name="birth_date">1988-09-20</field>
+        <field name="phone">+380672222222</field>
+        <field name="personal_doctor_id" ref="doctor_wilson"/>
+        <field name="insurance_policy_number">INS-100002</field>
+        <field name="gender">female</field>
+        <field name="blood_group">a_neg</field>
+    </record>
+
+    <record id="patient_alex" model="hospital.patient">
+        <field name="name">Alex Brown</field>
+        <field name="birth_date">2001-01-05</field>
+        <field name="phone">+380673333333</field>
+        <field name="personal_doctor_id" ref="doctor_cuddy"/>
+        <field name="insurance_policy_number">INS-100003</field>
+        <field name="gender">male</field>
+        <field name="blood_group">ab_pos</field>
+    </record>
+
+
+    <!-- VISITS -->
+    <record id="visit_john_001" model="hospital.visit">
+        <field name="name">VISIT-001</field>
+        <field name="state">done</field>
+        <field name="patient_id" ref="patient_john"/>
+        <field name="doctor_id" ref="doctor_house"/>
+        <field name="disease_id" ref="disease_flu"/>
+        <field name="planned_datetime">2026-05-01 10:00:00</field>
+        <field name="actual_datetime">2026-05-01 10:15:00</field>
+        <field name="summary" type="html">
+            <p>Flu symptoms confirmed. Treatment prescribed.</p>
+        </field>
+    </record>
+
+    <record id="visit_john_002" model="hospital.visit">
+        <field name="name">VISIT-002</field>
+        <field name="state">planned</field>
+        <field name="patient_id" ref="patient_john"/>
+        <field name="doctor_id" ref="doctor_wilson"/>
+        <field name="disease_id" ref="disease_cold"/>
+        <field name="planned_datetime">2026-05-10 11:00:00</field>
+        <field name="summary" type="html">
+            <p>Follow-up consultation planned.</p>
+        </field>
+    </record>
+
+    <record id="visit_mary_001" model="hospital.visit">
+        <field name="name">VISIT-003</field>
+        <field name="state">done</field>
+        <field name="patient_id" ref="patient_mary"/>
+        <field name="doctor_id" ref="doctor_wilson"/>
+        <field name="disease_id" ref="disease_allergy"/>
+        <field name="planned_datetime">2026-05-02 14:00:00</field>
+        <field name="actual_datetime">2026-05-02 14:05:00</field>
+        <field name="summary" type="html">
+            <p>Seasonal allergy diagnosed. Medication recommended.</p>
+        </field>
+    </record>
+
+    <record id="visit_mary_002" model="hospital.visit">
+        <field name="name">VISIT-004</field>
+        <field name="state">cancelled</field>
+        <field name="patient_id" ref="patient_mary"/>
+        <field name="doctor_id" ref="doctor_house"/>
+        <field name="disease_id" ref="disease_cold"/>
+        <field name="planned_datetime">2026-05-12 09:30:00</field>
+        <field name="summary" type="html">
+            <p>Visit cancelled by patient.</p>
+        </field>
+    </record>
+
+    <record id="visit_alex_001" model="hospital.visit">
+        <field name="name">VISIT-005</field>
+        <field name="state">planned</field>
+        <field name="patient_id" ref="patient_alex"/>
+        <field name="doctor_id" ref="doctor_cuddy"/>
+        <field name="disease_id" ref="disease_flu"/>
+        <field name="planned_datetime">2026-05-15 16:00:00</field>
+        <field name="summary" type="html">
+            <p>Initial consultation planned.</p>
+        </field>
+    </record>
+
+    <record id="visit_alex_002" model="hospital.visit">
+        <field name="name">VISIT-006</field>
+        <field name="state">done</field>
+        <field name="patient_id" ref="patient_alex"/>
+        <field name="doctor_id" ref="doctor_house"/>
+        <field name="disease_id" ref="disease_allergy"/>
+        <field name="planned_datetime">2026-05-03 12:00:00</field>
+        <field name="actual_datetime">2026-05-03 12:20:00</field>
+        <field name="summary" type="html">
+            <p>Allergy symptoms reviewed. Further observation advised.</p>
+        </field>
+    </record>
+
+    <record id="visit_extra_007" model="hospital.visit">
+        <field name="name">VISIT-007</field>
+        <field name="state">planned</field>
+        <field name="patient_id" ref="patient_john"/>
+        <field name="doctor_id" ref="doctor_house"/>
+        <field name="disease_id" ref="disease_flu"/>
+        <field name="planned_datetime">2026-06-01 09:00:00</field>
+        <field name="summary" type="html">
+            <p>Routine respiratory follow-up planned.</p>
+        </field>
+    </record>
+
+    <record id="visit_extra_008" model="hospital.visit">
+        <field name="name">VISIT-008</field>
+        <field name="state">done</field>
+        <field name="patient_id" ref="patient_mary"/>
+        <field name="doctor_id" ref="doctor_wilson"/>
+        <field name="disease_id" ref="disease_allergy"/>
+        <field name="planned_datetime">2026-06-03 11:00:00</field>
+        <field name="actual_datetime">2026-06-03 11:10:00</field>
+        <field name="summary" type="html">
+            <p>Allergy treatment updated.</p>
+        </field>
+    </record>
+
+    <record id="visit_extra_009" model="hospital.visit">
+        <field name="name">VISIT-009</field>
+        <field name="state">cancelled</field>
+        <field name="patient_id" ref="patient_alex"/>
+        <field name="doctor_id" ref="doctor_cuddy"/>
+        <field name="disease_id" ref="disease_cold"/>
+        <field name="planned_datetime">2026-06-05 13:00:00</field>
+        <field name="summary" type="html">
+            <p>Patient cancelled scheduled appointment.</p>
+        </field>
+    </record>
+
+    <record id="visit_extra_010" model="hospital.visit">
+        <field name="name">VISIT-010</field>
+        <field name="state">done</field>
+        <field name="patient_id" ref="patient_john"/>
+        <field name="doctor_id" ref="doctor_wilson"/>
+        <field name="disease_id" ref="disease_cold"/>
+        <field name="planned_datetime">2026-07-02 15:00:00</field>
+        <field name="actual_datetime">2026-07-02 15:20:00</field>
+        <field name="summary" type="html">
+            <p>Cold symptoms treated successfully.</p>
+        </field>
+    </record>
+
+    <record id="visit_extra_011" model="hospital.visit">
+        <field name="name">VISIT-011</field>
+        <field name="state">planned</field>
+        <field name="patient_id" ref="patient_mary"/>
+        <field name="doctor_id" ref="doctor_house"/>
+        <field name="disease_id" ref="disease_flu"/>
+        <field name="planned_datetime">2026-07-10 10:30:00</field>
+        <field name="summary" type="html">
+            <p>Diagnostic respiratory consultation scheduled.</p>
+        </field>
+    </record>
+
+    <record id="visit_extra_012" model="hospital.visit">
+        <field name="name">VISIT-012</field>
+        <field name="state">done</field>
+        <field name="patient_id" ref="patient_alex"/>
+        <field name="doctor_id" ref="doctor_house"/>
+        <field name="disease_id" ref="disease_allergy"/>
+        <field name="planned_datetime">2026-08-01 14:00:00</field>
+        <field name="actual_datetime">2026-08-01 14:25:00</field>
+        <field name="summary" type="html">
+            <p>Allergy symptoms improved after treatment.</p>
+        </field>
+    </record>
+
+
+    <!-- DOCTOR HISTORY -->
+    <record id="doctor_history_john_house" model="hospital.doctor.history">
+        <field name="patient_id" ref="patient_john"/>
+        <field name="doctor_id" ref="doctor_house"/>
+        <field name="assignment_date">2025-01-10</field>
+        <field name="change_date">2025-06-15</field>
+        <field name="active">False</field>
+    </record>
+
+    <record id="doctor_history_john_wilson" model="hospital.doctor.history">
+        <field name="patient_id" ref="patient_john"/>
+        <field name="doctor_id" ref="doctor_wilson"/>
+        <field name="assignment_date">2025-06-16</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="doctor_history_mary_wilson" model="hospital.doctor.history">
+        <field name="patient_id" ref="patient_mary"/>
+        <field name="doctor_id" ref="doctor_wilson"/>
+        <field name="assignment_date">2025-03-01</field>
+        <field name="change_date">2025-09-01</field>
+        <field name="active">False</field>
+    </record>
+
+    <record id="doctor_history_mary_cuddy" model="hospital.doctor.history">
+        <field name="patient_id" ref="patient_mary"/>
+        <field name="doctor_id" ref="doctor_cuddy"/>
+        <field name="assignment_date">2025-09-02</field>
+        <field name="active">True</field>
+    </record>
+
+
+    <record id="doctor_chase" model="hospital.doctor">
+        <field name="name">Dr. Chase</field>
+        <field name="specialty">Intensive Care</field>
+        <field name="phone">+380504444444</field>
+        <field name="category_id" ref="doctor_category_intern"/>
+        <field name="mentor_id" ref="doctor_house"/>
+        <field name="gender">male</field>
+        <field name="blood_group">b_neg</field>
+        <field name="birth_date">1998-03-14</field>
+    </record>
+
+    <record id="doctor_cameron" model="hospital.doctor">
+        <field name="name">Dr. Cameron</field>
+        <field name="specialty">Immunology</field>
+        <field name="phone">+380505555555</field>
+        <field name="category_id" ref="doctor_category_intern"/>
+        <field name="mentor_id" ref="doctor_wilson"/>
+        <field name="gender">female</field>
+        <field name="blood_group">ab_neg</field>
+        <field name="birth_date">1999-07-09</field>
+    </record>
+
+</odoo>

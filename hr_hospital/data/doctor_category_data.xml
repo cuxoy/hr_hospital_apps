@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="doctor_category_intern" model="hospital.doctor.category">
+        <field name="name">Лікар-інтерн</field>
+        <field name="quality_level">1</field>
+    </record>
+
+    <record id="doctor_category_specialist" model="hospital.doctor.category">
+        <field name="name">Лікар-спеціаліст</field>
+        <field name="quality_level">2</field>
+    </record>
+
+    <record id="doctor_category_highest" model="hospital.doctor.category">
+        <field name="name">Лікар вищої категорії</field>
+        <field name="quality_level">3</field>
+    </record>
+</odoo>

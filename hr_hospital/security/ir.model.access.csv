@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_visit_patient,hospital.visit.patient,model_hospital_visit,group_hospital_patient,1,0,0,0
+access_visit_intern,hospital.visit.intern,model_hospital_visit,group_hospital_intern,1,1,0,0
+access_visit_doctor,hospital.visit.doctor,model_hospital_visit,group_hospital_doctor,1,1,0,0
+access_visit_manager,hospital.visit.manager,model_hospital_visit,group_hospital_manager,1,0,0,0
+access_visit_admin,hospital.visit.admin,model_hospital_visit,group_hospital_admin,1,1,1,1
+access_doctor_admin,hospital.doctor.admin,model_hospital_doctor,group_hospital_admin,1,1,1,1
+access_patient_admin,hospital.patient.admin,model_hospital_patient,group_hospital_admin,1,1,1,1
+access_disease_admin,hospital.disease.admin,model_hospital_disease,group_hospital_admin,1,1,1,1
+access_doctor_category_admin,hospital.doctor.category.admin,model_hospital_doctor_category,group_hospital_admin,1,1,1,1
+access_doctor_history_admin,hospital.doctor.history.admin,model_hospital_doctor_history,group_hospital_admin,1,1,1,1

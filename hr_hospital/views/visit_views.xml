@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hospital_visit_list" model="ir.ui.view">
+        <field name="name">hospital.visit.list</field>
+        <field name="model">hospital.visit</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="disease_id"/>
+                <field name="planned_datetime"/>
+                <field name="actual_datetime"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hospital_visit_form" model="ir.ui.view">
+        <field name="name">hospital.visit.form</field>
+        <field name="model">hospital.visit</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="planned,done,cancelled"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_same_disease_visits"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-medkit">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Same Disease</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <group>
+                        <field name="name"/>
+                        <field name="patient_id"/>
+                        <field name="doctor_id"/>
+                        <field name="disease_id"/>
+                        <field name="planned_datetime"/>
+                        <field name="actual_datetime"/>
+                        <field name="summary"/>
+                        <field name="notes"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hospital_visit_calendar" model="ir.ui.view">
+        <field name="name">hospital.visit.calendar</field>
+        <field name="model">hospital.visit</field>
+        <field name="arch" type="xml">
+            <calendar string="Visits"
+                      date_start="planned_datetime"
+                      color="doctor_id">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="disease_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_hospital_visit_search" model="ir.ui.view">
+        <field name="name">hospital.visit.search</field>
+        <field name="model">hospital.visit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="disease_id"/>
+                <field name="state"/>
+
+                <filter name="group_by_state"
+                        string="Group by Status"
+                        context="{'group_by': 'state'}"/>
+
+                <filter name="group_by_doctor"
+                        string="Group by Doctor"
+                        context="{'group_by': 'doctor_id'}"/>
+
+                <filter name="group_by_month"
+                        string="Group by Month"
+                        context="{'group_by': 'planned_datetime:month'}"/>
+
+                <searchpanel>
+                    <field name="doctor_id" string="Doctor"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_hospital_visit_pivot" model="ir.ui.view">
+        <field name="name">hospital.visit.pivot</field>
+        <field name="model">hospital.visit</field>
+        <field name="arch" type="xml">
+            <pivot string="Visits Pivot">
+                <field name="doctor_id" type="row"/>
+                <field name="planned_datetime" type="row" interval="month"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_hospital_visit_graph" model="ir.ui.view">
+        <field name="name">hospital.visit.graph</field>
+        <field name="model">hospital.visit</field>
+        <field name="arch" type="xml">
+            <graph string="Visits by Month and Disease"
+                   type="bar"
+                   stacked="1">
+                <field name="planned_datetime" type="row" interval="month"/>
+                <field name="disease_id" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_hospital_visit" model="ir.actions.act_window">
+        <field name="name">Visits</field>
+        <field name="res_model">hospital.visit</field>
+        <field name="view_mode">list,form,calendar,pivot,graph</field>
+        <field name="search_view_id" ref="view_hospital_visit_search"/>
+    </record>
+</odoo>

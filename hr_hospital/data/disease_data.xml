@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="disease_respiratory" model="hospital.disease">
+        <field name="name">Respiratory Diseases</field>
+        <field name="code">RESP</field>
+        <field name="description">Diseases related to respiratory system.</field>
+    </record>
+
+    <record id="disease_flu" model="hospital.disease">
+        <field name="name">Flu</field>
+        <field name="code">FLU</field>
+        <field name="parent_id" ref="disease_respiratory"/>
+        <field name="description">Influenza disease.</field>
+    </record>
+
+    <record id="disease_cold" model="hospital.disease">
+        <field name="name">Cold</field>
+        <field name="code">COLD</field>
+        <field name="parent_id" ref="disease_respiratory"/>
+        <field name="description">Common cold.</field>
+    </record>
+
+    <record id="disease_immune" model="hospital.disease">
+        <field name="name">Immune System Diseases</field>
+        <field name="code">IMM</field>
+        <field name="description">Diseases related to immune reactions.</field>
+    </record>
+
+    <record id="disease_allergy" model="hospital.disease">
+        <field name="name">Allergy</field>
+        <field name="code">ALG</field>
+        <field name="parent_id" ref="disease_immune"/>
+        <field name="description">Allergic reaction.</field>
+    </record>
+</odoo>
